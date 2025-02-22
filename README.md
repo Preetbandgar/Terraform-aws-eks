@@ -87,6 +87,7 @@ Before deploying the infrastructure, **set up the Terraform backend** by executi
 ---
 
 ⚠️ Important Notes:
+
 🔹 **Execute main.tf in the backend/ folder first** to create the Terraform backend using S3 and DynamoDB.
 🔹 **Ensure the same S3 bucket name** is referenced in the final main.tf that invokes the **EKS and VPC modules**.
 
