@@ -10,48 +10,56 @@ Welcome to the **EcomTelemetry-App** infrastructure repository! This project set
 
 ```
 Terraform-aws-eks/
-│── backend/                  
-│   ├── main.tf               
-│── eks/                      
-│   ├── main.tf               
-│   ├── variables.tf          
-│   ├── outputs.tf            
-│── vpc/                      
-│   ├── main.tf               
-│   ├── variables.tf          
-│   ├── outputs.tf            
-│── main.tf                   
-│── variables.tf              
-│── outputs.tf                
-│── README.md                 
+│── backend/
+│   ├── main.tf
+│── eks/
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│── vpc/
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│── main.tf
+│── variables.tf
+│── outputs.tf
+│── README.md
 ```
 
 ---
 
 ⚡ Prerequisites
 
-✅ **Terraform** v1.3+  
-✅ **AWS CLI** configured with necessary IAM permissions  
-✅ **kubectl** installed for interacting with EKS  
+✅ **EC2 Instance**: Launch an AWS EC2 instance with **Ubuntu/Linux** (minimum `t2.medium` recommended)
+✅ **AWS CLI**: Install AWS CLI on the EC2 instance
+✅ **IAM Credentials**: Configure AWS credentials using the following command:
+
+```sh
+aws configure
+```
+
+✅ **Terraform**: Install Terraform v1.3+
+✅ **kubectl**: Install kubectl for interacting with EKS
 
 ---
 
 🏗️ Terraform Backend Setup
 
-Before deploying the infrastructure, **set up the Terraform backend** by executing main.tf in the backend/ directory. This will create **an S3 bucket and a DynamoDB table for state locking**.
+Before deploying the infrastructure, **set up the Terraform backend** by executing `main.tf` in the `backend/` directory. This will create **an S3 bucket and a DynamoDB table for state locking**.
 
 ### Steps:
+
 1️⃣ **Navigate to the backend directory**:
    ```sh
    cd backend/
    ```
-2️⃣ **Modify main.tf** to specify your preferred AWS region and S3 bucket name.
+2️⃣ **Modify `main.tf`** to specify your preferred AWS region and S3 bucket name.
 3️⃣ **Initialize and apply Terraform** to create backend resources:
    ```sh
    terraform init
    terraform apply -auto-approve
    ```
-4️⃣ **Ensure the same S3 bucket name** is used in the final main.tf when invoking the EKS and VPC modules.
+4️⃣ **Ensure the same S3 bucket name** is used in the final `main.tf` when invoking the EKS and VPC modules.
 
 ---
 
@@ -80,6 +88,22 @@ Before deploying the infrastructure, **set up the Terraform backend** by executi
 
 ---
 
+🔥 Future Enhancements
+
+✅ Implement **IAM Roles for Service Accounts (IRSA)**  
+✅ Configure **AWS ALB Ingress Controller**  
+✅ Integrate **GitHub Actions for CI/CD**  
+
+---
+
+🧹 Cleanup
+To destroy the infrastructure, run:
+```sh
+terraform destroy -auto-approve
+```
+
+---
+
 🤝 Contributing
 
 💡 Feel free to **fork** the repository, create a **feature branch**, and submit a **pull request**!
@@ -88,14 +112,11 @@ Before deploying the infrastructure, **set up the Terraform backend** by executi
 
 ⚠️ Important Notes:
 
-🔹 **Execute main.tf in the backend/ folder first** to create the Terraform backend using S3 and DynamoDB.
+🔹 **Execute `main.tf` in the `backend/` folder first** to create the Terraform backend using S3 and DynamoDB.  
+🔹 **Ensure the same S3 bucket name** is referenced in the final `main.tf` that invokes the **EKS and VPC modules**.
 
-🔹 **Ensure the same S3 bucket name** is referenced in the final main.tf that invokes the **EKS and VPC modules**.
-
----
-
-🎖️ Credits
-This project is inspired by OpenTelemetry's official demo and Terraform best practices. Special thanks to the OpenTelemetry contributors and team for their comprehensive documentation and contributions to the open-source observability ecosystem.
+💙 **Credits**
+This project utilizes OpenTelemetry demo documentation and acknowledges the contributions of the **OpenTelemetry team and community** for their valuable resources and guidance.
 
 Happy Coding! 🚀
 
