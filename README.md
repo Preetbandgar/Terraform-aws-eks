@@ -111,7 +111,8 @@ terraform destroy -auto-approve
 🔹 **Ensure the same S3 bucket name** is referenced in the final `main.tf` that invokes the **EKS and VPC modules**.
 
 💙 **Credits**
+
 This project utilizes OpenTelemetry demo documentation and acknowledges the contributions of the **OpenTelemetry team and community** for their valuable resources and guidance.
 
-Happy Coding! 🚀
+Thanks for reading! 🚀
 
