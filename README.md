@@ -1,169 +1,99 @@
-# 🚀 EcomTelemetry Terraform Infrastructure
+# Terraform AWS EKS Infrastructure for EcomTelemetry-App
 
-![Terraform](https://img.shields.io/badge/Terraform-AWS-blue?style=for-the-badge&logo=terraform)
-![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-Observability-purple?style=for-the-badge&logo=opentelemetry)
+This repository provides the infrastructure setup for the **EcomTelemetry-App** project, an end-to-end OpenTelemetry demo eCommerce application. The infrastructure is built using **Terraform**, utilizing modules for **Amazon EKS (Elastic Kubernetes Service) and VPC (Virtual Private Cloud)**. The Terraform backend state is managed using **Amazon S3** with state locking enabled via **DynamoDB**.
 
-This repository provides the **Terraform infrastructure setup** for **EcomTelemetry**, an end-to-end **OpenTelemetry demo eCommerce application** ([official demo](https://opentelemetry.io/docs/demo/)). It provisions a scalable, observable cloud environment on **AWS** using **EKS (Kubernetes), VPC, S3, and DynamoDB** for state management.
+**EcomTelemetry-App Project Repository:** [EcomTelemetry-App-App](https://github.com/Preetbandgar/EcomTelemetry-App-App.git)
 
----
+## Project Architecture
 
-## 📌 Features
-✅ **Modular Terraform Design** – Reusable modules for **EKS** and **VPC**  
-✅ **State Management** – Backend configured with **S3** and **DynamoDB** for locking  
-✅ **Highly Scalable** – Kubernetes-based deployment using **EKS**  
-✅ **Observability** – Designed for **OpenTelemetry tracing & monitoring**  
-✅ **Best Practices** – Follows **IaC principles**, ensuring **reproducibility** and **automation**  
-
----
-
-## 🏗️ Infrastructure Architecture
-
-```mermaid
-flowchart TD;
-    user[User] --> |Requests| ALB[Application Load Balancer]
-    ALB --> |Traffic Routing| EKS[EKS Cluster]
-    EKS --> |Deployments| Microservices
-    EKS --> |Storage| S3[S3 Bucket]
-    EKS --> |State Management| DynamoDB[DynamoDB State Locking]
-    Microservices --> |Tracing| OpenTelemetry[OpenTelemetry Collector]
-    OpenTelemetry --> |Metrics| Prometheus[Prometheus]
-    OpenTelemetry --> |Logs| Grafana[Grafana]
-```
-
----
-
-## 📂 Terraform Module Structure
 ```
 Terraform-aws-eks/
-│── modules/
-│   ├── eks/              # EKS Module
-│   ├── vpc/              # VPC Module
-│── backend/              # Statefile Management
-│── main.tf               # Main entry Terraform file
-│── variables.tf          # Input variables
-│── outputs.tf            # Output values
-│── .gitignore            # Ignore terraform state files
-│── README.md             # Project Documentation
+│── backend/                  # Terraform backend configuration (S3 & DynamoDB)
+│   ├── main.tf               # Backend setup script
+│── eks/                      # EKS module
+│   ├── main.tf               # EKS cluster definition
+│   ├── variables.tf          # Input variables
+│   ├── outputs.tf            # Output variables
+│── vpc/                      # VPC module
+│   ├── main.tf               # VPC network configuration
+│   ├── variables.tf          # Input variables
+│   ├── outputs.tf            # Output variables
+│── main.tf                   # Root Terraform configuration
+│── variables.tf              # Global variables
+│── outputs.tf                # Global outputs
+│── README.md                 # Project documentation
 ```
 
----
+## Prerequisites
 
-## ⚙️ Getting Started
-### **1️⃣ Clone the Repository**
-```bash
-git clone https://github.com/Preetbandgar/Terraform-aws-eks.git
-cd Terraform-aws-eks
+- **Terraform** v1.3+
+- **AWS CLI** configured with necessary IAM permissions
+- **kubectl** installed for interacting with EKS
+
+## Terraform Backend Setup
+
+Before applying the infrastructure, you need to **create the backend for state management** by executing `main.tf` in the `backend/` directory. 
+
+1. **Navigate to the backend directory**:
+   ```sh
+   cd backend/
+   ```
+2. **Modify `main.tf`** to specify your preferred AWS region and S3 bucket name.
+3. **Initialize and apply Terraform** to create the backend resources:
+   ```sh
+   terraform init
+   terraform apply -auto-approve
+   ```
+4. **Ensure that the same S3 bucket name** used in the backend `main.tf` is referenced in the final `main.tf` used to invoke the EKS and VPC modules.
+
+## Deployment Steps
+
+1. **Navigate to the root directory**:
+   ```sh
+   cd ..
+   ```
+2. **Initialize Terraform**:
+   ```sh
+   terraform init
+   ```
+3. **Validate the configuration**:
+   ```sh
+   terraform validate
+   ```
+4. **Plan the deployment**:
+   ```sh
+   terraform plan
+   ```
+5. **Apply the infrastructure**:
+   ```sh
+   terraform apply -auto-approve
+   ```
+
+## OpenTelemetry Integration
+
+Once the infrastructure is up, you can deploy OpenTelemetry components to monitor the eCommerce application. Key steps include:
+- Deploying OpenTelemetry Collector on EKS
+- Configuring traces, metrics, and logs export to monitoring solutions
+- Integrating with Prometheus, Jaeger, or Grafana for observability
+
+## Future Enhancements
+- Implement **IAM Roles for Service Accounts (IRSA)**
+- Configure **AWS ALB Ingress Controller**
+- Integrate **GitHub Actions for CI/CD pipeline**
+
+## Cleanup
+To destroy the infrastructure, run:
+```sh
+terraform destroy -auto-approve
 ```
 
-### **2️⃣ Initialize Terraform**
-```bash
-terraform init
-```
+## Contributing
+Feel free to fork the repository, create a feature branch, and submit a pull request!
 
-### **3️⃣ Plan and Apply Configuration**
-```bash
-terraform plan -out=tfplan
-terraform apply tfplan
-```
-
-### **4️⃣ Destroy Infrastructure (if needed)**
-```bash
-terraform destroy
-```
+## License
+This project is licensed under the MIT License.
 
 ---
-
-## 🏗️ Terraform Backend Configuration (S3 & DynamoDB)
-This setup ensures **state management** and **locking** using an **S3 bucket** and **DynamoDB**.
-
-```hcl
-terraform {
-  backend "s3" {
-    bucket         = "ecomtelemetry-terraform-state"
-    key            = "terraform/eks/terraform.tfstate"
-    region         = "us-east-1"
-    dynamodb_table = "terraform-state-lock"
-    encrypt        = true
-  }
-}
-```
-
----
-
-## 🌐 EKS Module Configuration
-```hcl
-module "eks" {
-  source          = "./modules/eks"
-  cluster_name    = "ecomtelemetry-cluster"
-  cluster_version = "1.27"
-  node_group_size = "3"
-}
-```
-
----
-
-## 🏗️ VPC Module Configuration
-```hcl
-module "vpc" {
-  source       = "./modules/vpc"
-  vpc_cidr     = "10.0.0.0/16"
-  public_subnets  = ["10.0.1.0/24", "10.0.2.0/24"]
-  private_subnets = ["10.0.3.0/24", "10.0.4.0/24"]
-  enable_nat_gateway = true
-}
-```
-
----
-
-## 📊 OpenTelemetry Integration
-- **Traces:** Exported to **Jaeger/Zipkin**
-- **Metrics:** Collected with **Prometheus**
-- **Logs:** Visualized in **Grafana**
-
-### **Example OpenTelemetry Collector Config (otel-collector-config.yaml)**
-```yaml
-receivers:
-  otlp:
-    protocols:
-      grpc:
-      http:
-exporters:
-  logging:
-  prometheus:
-    endpoint: ":9090"
-service:
-  pipelines:
-    traces:
-      receivers: [otlp]
-      exporters: [logging]
-    metrics:
-      receivers: [otlp]
-      exporters: [prometheus]
-```
-
----
-
-## 🎯 Roadmap & Future Enhancements
-- [ ] **Autoscaling** for EKS Nodes
-- [ ] **Service Mesh (Istio/Linkerd)** for traffic management
-- [ ] **CI/CD Integration** (GitHub Actions/Terraform Cloud)
-
----
-
-## 💬 Contributing
-Contributions are welcome! Feel free to fork the repo and submit PRs. 🚀
-
----
-
-## 📜 License
-This project is **open-source** and licensed under **MIT License**.
-
----
-
-## 📞 Contact
-- **GitHub**: [Preetbandgar](https://github.com/Preetbandgar)
-- **Email**: bandgar.pritam8@gmail.com
-
----
-
-### 🌟 If you like this project, consider giving it a ⭐ on GitHub!
+### Note:
+- You must first **execute `main.tf` in the `backend/` folder** to create the Terraform backend using S3 and DynamoDB.
+- Ensure the **same S3 bucket name** is referenced in the final `main.tf` that invokes the **EKS and VPC modules**.
