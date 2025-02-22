@@ -91,14 +91,6 @@ Before deploying the infrastructure, **set up the Terraform backend** by executi
 
 ---
 
-🔥 Future Enhancements
-
-✅ Implement **IAM Roles for Service Accounts (IRSA)**  
-✅ Configure **AWS ALB Ingress Controller**  
-✅ Integrate **GitHub Actions for CI/CD**  
-
----
-
 🧹 Cleanup
 To destroy the infrastructure, run:
 ```sh
