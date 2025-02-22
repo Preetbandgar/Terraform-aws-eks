@@ -2,7 +2,7 @@
 
 This repository provides the infrastructure setup for the **EcomTelemetry-App** project, an end-to-end OpenTelemetry demo eCommerce application. The infrastructure is built using **Terraform**, utilizing modules for **Amazon EKS (Elastic Kubernetes Service) and VPC (Virtual Private Cloud)**. The Terraform backend state is managed using **Amazon S3** with state locking enabled via **DynamoDB**.
 
-**EcomTelemetry-App Project Repository:** [EcomTelemetry-App-App](https://github.com/Preetbandgar/EcomTelemetry-App-App.git)
+**EcomTelemetry-App Project Repository:** [EcomTelemetry-App-App](https://github.com/Preetbandgar/EcomTelemetry-App.git)
 
 ## Project Architecture
 
