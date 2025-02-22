@@ -8,21 +8,23 @@ Welcome to the **EcomTelemetry-App** infrastructure repository! This project set
 
 📌 Project Architecture
 
+```
 Terraform-aws-eks/
-│── backend/
-│   ├── main.tf
-│── eks/
-│   ├── main.tf
-│   ├── variables.tf
-│   ├── outputs.tf
-│── vpc/
-│   ├── main.tf
-│   ├── variables.tf
-│   ├── outputs.tf
-│── main.tf
-│── variables.tf
-│── outputs.tf
-│── README.md         
+│── backend/                  
+│   ├── main.tf               
+│── eks/                      
+│   ├── main.tf               
+│   ├── variables.tf          
+│   ├── outputs.tf            
+│── vpc/                      
+│   ├── main.tf               
+│   ├── variables.tf          
+│   ├── outputs.tf            
+│── main.tf                   
+│── variables.tf              
+│── outputs.tf                
+│── README.md                 
+```
 
 ---
 
