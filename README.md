@@ -31,7 +31,9 @@ Terraform-aws-eks/
 ⚡ Prerequisites
 
 ✅ **EC2 Instance**: Launch an AWS EC2 instance with **Ubuntu/Linux** (minimum `t2.medium` recommended)
+
 ✅ **AWS CLI**: Install AWS CLI on the EC2 instance
+
 ✅ **IAM Credentials**: Configure AWS credentials using the following command:
 
 ```sh
@@ -39,6 +41,7 @@ aws configure
 ```
 
 ✅ **Terraform**: Install Terraform v1.3+
+
 ✅ **kubectl**: Install kubectl for interacting with EKS
 
 ---
