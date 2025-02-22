@@ -1,7 +1,5 @@
 🚀 Terraform AWS EKS Infrastructure for EcomTelemetry-App
 
-![Terraform AWS EKS](https://miro.medium.com/max/1400/1*qPGRsEmwV9JjVGPG5g6MKA.png)
-
 Welcome to the **EcomTelemetry-App** infrastructure repository! This project sets up a highly scalable **AWS EKS (Elastic Kubernetes Service) and VPC (Virtual Private Cloud)** environment using **Terraform**. The backend state is securely managed using **Amazon S3 and DynamoDB state locking**.
 
 🔗 **EcomTelemetry-App Repo:** [EcomTelemetry-App](https://github.com/Preetbandgar/EcomTelemetry-App.git)
@@ -10,23 +8,21 @@ Welcome to the **EcomTelemetry-App** infrastructure repository! This project set
 
 📌 Project Architecture
 
-![Infrastructure Diagram](https://www.datocms-assets.com/2885/1620155841-eks-architecture.png)
-
 Terraform-aws-eks/
-│── backend/                  # Terraform backend configuration (S3 & DynamoDB)
-│   ├── main.tf               # Backend setup script
-│── eks/                      # EKS module
-│   ├── main.tf               # EKS cluster definition
-│   ├── variables.tf          # Input variables
-│   ├── outputs.tf            # Output variables
-│── vpc/                      # VPC module
-│   ├── main.tf               # VPC network configuration
-│   ├── variables.tf          # Input variables
-│   ├── outputs.tf            # Output variables
-│── main.tf                   # Root Terraform configuration
-│── variables.tf              # Global variables
-│── outputs.tf                # Global outputs
-│── README.md                 # Project documentation
+│── backend/
+│   ├── main.tf
+│── eks/
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│── vpc/
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│── main.tf
+│── variables.tf
+│── outputs.tf
+│── README.md         
 
 ---
 
